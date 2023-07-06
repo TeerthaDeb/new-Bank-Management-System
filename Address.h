@@ -8,12 +8,12 @@ private:
 
 public:
     // Default constructor
-    Address() {
-        Street = "";
-        City = "";
-        State = "";
-        PostalCode = "";
-    }
+		Address() {
+			Street = "";
+			City = "";
+			State = "";
+			PostalCode = "";
+		}
 
     // Parameterized constructor
     Address(string Street , string City , string State , string Country , string PostalCode) {
@@ -23,7 +23,11 @@ public:
     // Setter methods
 
 	void set_Address(string Street , string City , string State , string Country , string PostalCode){
-
+		setStreet(Street);
+		setCity(City);
+		setState(State);
+		setCountry(Country );
+		setPostalCode(PostalCode ) ;
 	}
 
     void setStreet(string Street) {
@@ -34,13 +38,17 @@ public:
 		this->City = City;
     }
 
-    void setState(const string& st) {
-        State = st;
+    void setState(string State) {
+        this->State = State;
     }
 
-    void setPostalCode(const string& pc) {
-        PostalCode = pc;
+    void setPostalCode(string PostalCode) {
+        this->PostalCode = PostalCode;
     }
+
+	void setCountry(string Country) {
+		this->Country= Country ;
+	}
 
     // Getter methods
     string getStreet() const {
@@ -59,47 +67,36 @@ public:
         return PostalCode;
     }
 
+	string getCountry() const{
+		return  Country;
+	}
+
+	void display()
+	{
+		cout<< Street << " , " << City << " , " << State << " , " << Country << " , Postal Code : " << PostalCode;
+	}
+	string print_address() const
+	{
+		return string(Street + " , " + City + " , " + State + " , " + Country + " , Postal Code : " + '\n' + PostalCode);
+	}
+
+
     // Overloading the assignment operator
     Address& operator=(const Address& other) {
         if (this == &other) {
             return *this;
         }
-
         Street = other.Street;
         City = other.City;
         State = other.State;
+		Country = other.Country;
         PostalCode = other.PostalCode;
-
         return *this;
-    }
-
-    // Overloading the less than operator
-    bool operator<(const Address& other) const {
-        if (PostalCode < other.PostalCode)
-            return true;
-        else if (PostalCode == other.PostalCode && City < other.City)
-            return true;
-        else if (PostalCode == other.PostalCode && City == other.City && Street < other.Street)
-            return true;
-
-        return false;
-    }
-
-    // Overloading the greater than operator
-    bool operator>(const Address& other) const {
-        if (PostalCode > other.PostalCode)
-            return true;
-        else if (PostalCode == other.PostalCode && City > other.City)
-            return true;
-        else if (PostalCode == other.PostalCode && City == other.City && Street > other.Street)
-            return true;
-
-        return false;
     }
 
     // Overloading the equality operator
     bool operator==(const Address& other) const {
-        return (Street == other.Street && City == other.City && State == other.State && PostalCode == other.PostalCode);
+        return (Street == other.Street && City == other.City && State == other.State && PostalCode == other.PostalCode && Country == other.Country);
     }
 
     // Overloading the inequality operator

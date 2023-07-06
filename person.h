@@ -1,14 +1,15 @@
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <string>
 #include "Date.h"
+#include "Address.h"
 
 using namespace std;
-class Person : public Date
+class Person
 {
 	private:
 	//variables:
 		//bool active_status = true;
-		char name[50] , address[20], phone_number[50] , sex , password[50] , city[50] , province[50] , country[50] , e_mail[70]; //account_create_date[100] , last_account_modification_date[100] has been removed from here.
+		char name[50], phone_number[50] , sex , password[50] , e_mail[70]; //account_create_date[100] , last_account_modification_date[100] has been removed from here.
 		/*
 			Defining new persons, without any account number or something.
 		*/
@@ -18,6 +19,7 @@ class Person : public Date
 		//short int birth_year , birth_month , birth_date ; made_transection = 0; has been removed from here.
 		//transection transfers[50];
 		Date Birth_date;
+		Address user_address;
 		//functions:
 	public:
 		//variables:
@@ -31,16 +33,16 @@ class Person : public Date
 			}
 
 		//constructor(s):
-			/* Initial was: 
+			/* Initial was:
 			Person(string user_name , string user_password , string user_address , string user_city , string user_province , string user_country , long long int account_creator_id , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email, double user_checking_amount = 0 , double user_saving_amount= 0 , double user_interest_rate = default_interest_rate)
 			{
 				set_every_thing_for_user(user_name , user_password , user_address , user_city , user_province , user_country , account_creator_id , user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number ,  user_email , user_checking_amount , user_saving_amount , user_interest_rate);
 			}
 			*/
 
-			Person(string user_name , string user_password , string user_address , string user_city , string user_province , string user_country , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
+			Person(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
 			{
-				set_every_thing_for_user(user_name , user_password , user_address , user_city , user_province , user_country , user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number ,  user_email);
+				set_every_thing_for_user(user_name , user_password , user_street , user_city , user_province , user_country , user_PostalCode, user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number , user_email);
 			}
 
 
@@ -65,12 +67,17 @@ class Person : public Date
 			{
 				strcpy(name , user_name.c_str());
 			}
-			void set_user_address(string user_address , string user_city , string user_province , string user_country)
+			void set_user_address(string user_street , string user_city , string user_province , string user_country , string user_PostalCode)
 			{
-				strcpy(address , user_address.c_str());
-				strcpy(city , user_city.c_str());
-				strcpy(province , user_province.c_str());
-				strcpy(country , user_country.c_str());
+				user_address.set_Address(user_street , user_city , user_province , user_country , user_PostalCode);
+			}
+			void set_users_phone_number(string user_phone_number)
+			{
+				strcpy(phone_number , user_phone_number.c_str());
+			}
+			void set_email(string email)
+			{
+				strcpy(e_mail , email.c_str());
 			}
 			/*
 			void set_user_checking_amount(double user_checking_amount)
@@ -134,10 +141,10 @@ class Person : public Date
 				active_status = false;
 			}
 			*/
-			void set_every_thing_for_user(string user_name , string user_password , string user_address , string user_city , string user_province , string user_country , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
+			void set_every_thing_for_user(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode, short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
 			{
 				set_user_name(user_name);
-				set_user_address(user_address , user_city , user_province , user_country);
+				set_user_address(user_street , user_city , user_province , user_country , user_PostalCode);
 				set_user_password(user_password);
 				// set_user_checking_amount(user_checking_amount);
 				// set_user_saving_amount(user_saving_amount);
@@ -149,14 +156,6 @@ class Person : public Date
 				set_users_phone_number(user_phone_number);
 				set_email(user_email);
 			}
-			void set_users_phone_number(string user_phone_number)
-			{
-				strcpy(phone_number , user_phone_number.c_str());
-			}
-			void set_email(string email)
-			{
-				strcpy(e_mail , email.c_str());
-			}
 			//getters:
 			/*void print_everything()
 			{
@@ -165,7 +164,10 @@ class Person : public Date
 			*/
 			void print_Debugging_info()
 			{
-				cout<<"Name: "<<setw(20)<<name<<setw(20)<<"DOB: " << Birth_date.display() << ' ' <<
+				cout<<"Name: " << this->name << "DOB: "
+                << this->Birth_date.print_date() << ' '
+                << this->user_address.print_address() <<' '
+				<< this->sex <<' ' << this->e_mail <<' ' << this->phone_number <<' ' <<  this->password <<' ';
 			}
 			/*
 			long long int get_total_customers()
@@ -196,8 +198,9 @@ class Person : public Date
 			}
 			string get_address()
 			{
-				return address;
+				user_address.display();
 			}
+			/*
 			string get_city()
 			{
 				return city;
@@ -210,6 +213,7 @@ class Person : public Date
 			{
 				return country;
 			}
+
 			double get_checking_amount()
 			{
 				return checking_amount;
@@ -230,6 +234,7 @@ class Person : public Date
 			{
 				return last_modifier;
 			}
+			*/
 			string get_email()
 			{
 				return e_mail;
@@ -255,7 +260,7 @@ class Person : public Date
 				last_modifier = employee_id;
 			}
 			*/
-			void print_every_details_for_customer()
+			/*void print_every_details_for_customer()
 			{
 				gxy(5 , 1) , cout<<"account number:			"<<account_number;
 				gxy(5 , 2) , cout<<"Name:				"<<name;
@@ -285,10 +290,12 @@ class Person : public Date
 				gxy(5 , 16) , cout<<"Account created on:		"<<account_create_date;
 				gxy(5 , 17) , cout<<"Last modified on:			"<<last_account_modification_date;
 			}
+		*/
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////new
 		//getters
 		//friend functions:
 		//deposits
+			/*
 			void deposit_into_checking(double amount)
 			{
 				checking_amount += amount;
@@ -297,4 +304,5 @@ class Person : public Date
 			{
 				saving_amount += amount;
 			}
+			*/
 };
