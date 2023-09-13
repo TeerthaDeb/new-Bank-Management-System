@@ -1,25 +1,20 @@
-//#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <string>
 #include "Date.h"
 #include "Address.h"
+#include "gotoxy.h"
 
 using namespace std;
+
 class Person
 {
 	private:
 	//variables:
-		//bool active_status = true;
-		char name[50], phone_number[50] , sex , password[50] , e_mail[70]; //account_create_date[100] , last_account_modification_date[100] has been removed from here.
-		/*
-			Defining new persons, without any account number or something.
-		*/
-		//double checking_amount = 0 , saving_amount = 0 , visa_amount = 0 , interest_rate , points = 0 , loans = 0;
-		//long long int account_number = 100000000 + (rand() % 899999999) , visa_number = 1000000000 + (rand() % 8999999999) , account_creators_id = 0 , employee_number = 0 , last_modifier = 0;
-		//bool have_visa = 0 , is_employee = false;
-		//short int birth_year , birth_month , birth_date ; made_transection = 0; has been removed from here.
-		//transection transfers[50];
-		Date Birth_date;
-		Address user_address;
+		//These lines are declaring variables for storing the user's name, phone number, password, email, sex, birth date, and address.
+		string userName, userPhoneNumber , userPassword , userEmail;
+		char userSex;
+		Date userBirthDate;
+		Address userAddress;
 		//functions:
 	public:
 		//variables:
@@ -27,141 +22,209 @@ class Person
 		//functions:
 
 		//default constructor:
+			/**
+			 * @brief Construct a new Person object
+			 * It initializes the member variables `name`, `sex`, `Birth_date`, and `user` with default values.
+			 */
 			Person()
 			{
-
+				userName = "NoName";
+				userSex ='N';
+				userPassword = "Password";
+				userEmail = "abcd@abcd.com";
 			}
 
 		//constructor(s):
-			/* Initial was:
-			Person(string user_name , string user_password , string user_address , string user_city , string user_province , string user_country , long long int account_creator_id , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email, double user_checking_amount = 0 , double user_saving_amount= 0 , double user_interest_rate = default_interest_rate)
+			/**
+			 * @brief Construct a new Person object
+			 * The `Person` constructor is creating a new `Person` object with the provided parameters.
+			 * It takes in various details such as the user's name, password, address, birth date, sex, phone number, and email.
+			 * It then calls the `set_every_thing_for_user` function to set all the member variables of the `Person` object with the provided values.
+			 * @param user_name [string] : Name of the person
+			 * @param user_password [string] : password for that person
+			 * @param user_street [string] : street from Address
+			 * @param user_city [string] : city from Address
+			 * @param user_province [string] : province from Address
+			 * @param user_country [string] : country from Address
+			 * @param user_PostalCode [string] : Postal Code from Address
+			 * @param user_ApartmentNumber [int] : Dfault 0, The user's apartment number, if applicable.
+			 * @param user_unitNumber [int] : Dfault 0 , The user_unitNumber
+			 * @param user_birth_date [int] : day from Date
+			 * @param user_birth_month [int] : month from Date
+			 * @param user_birth_year [int] : year from Date
+			 * @param user_sex [char] : Expected ('M' / 'F' / 'G' / 'T')
+			 * @param user_phone_number [string] : User phone number with country code
+			 * @param user_email [string] : User email address. Expected '@xx....com' at the end
+			 */
+			Person(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode , int user_ApartmentNumber , int user_unitNumber , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
 			{
-				set_every_thing_for_user(user_name , user_password , user_address , user_city , user_province , user_country , account_creator_id , user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number ,  user_email , user_checking_amount , user_saving_amount , user_interest_rate);
+				set_every_thing_for_user(user_name , user_password , user_street , user_city , user_province , user_country , user_PostalCode , user_ApartmentNumber , user_unitNumber, user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number , user_email);
 			}
-			*/
-
-			Person(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
-			{
-				set_every_thing_for_user(user_name , user_password , user_street , user_city , user_province , user_country , user_PostalCode, user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number , user_email);
-			}
 
 
-			//copy constructors:
-			/*customers(const customers &object)
-			{
+			// //copy constructors:
+			// customers(const customers &obj)
+			// {
+			// 	//return *this;
+			// }
 
-				return *this;
-			}*/
+			// //destructor:
+			// ~Person()
+			// {
 
-			//destructor:
-			~Person()
-			{
+			// }
 
-			}
+
 		//setters:
+			/**
+			 * @brief Set the user password object
+			 * @throws [String] The password is less than 8 words. Can not set password.
+			 * The above code is defining a function called "set_user_password" that takes a string parameter called "new_password".
+			 *
+			 * @param new_password [String] : expected more than 8 words. otherwise exception thrown;
+			 */
 			void set_user_password(string new_password)
 			{
-				strcpy(password , new_password.c_str());
+				if(new_password.size() < 8){
+					throw string ("The password is less than 8 words. Can not set password.");
+				}
+				userPassword = new_password;
 			}
+
+
+			/**
+			 * @brief Set the user name object
+			 * @throws UserName can not have a digit in it
+			 * The above code is defining a function called "set_user_name" that takes a string parameter called "user_name".
+			 * This function is used to set the name of a user.
+			 * @param user_name [String] : name of the user
+			 */
 			void set_user_name(string user_name)
 			{
-				strcpy(name , user_name.c_str());
+
+				if(stringHasAnyDigit(user_name)){
+					throw string ("UserName can not have a digit in it");
+				}
+				userName = user_name;
 			}
-			void set_user_address(string user_street , string user_city , string user_province , string user_country , string user_PostalCode)
+
+			/**
+			 * @brief: function sets the address of a user by taking in the street, city, province, country, postal
+			 * code, apartment number, and unit number as parameters.
+			 *
+			 * @param user_street [string] : The name of the street where the user lives.
+			 * @param user_city [string] : The name of the city where the user resides.
+			 * @param user_province [string] : The user_province parameter represents the state or province of the user's address.
+			 * @param user_country [string] : The name of the country where the user resides.
+			 * @param user_PostalCode [string] : The user_PostalCode parameter is a string that represents the full postal
+			 * code of the user's address.
+			 * @param user_apartmentNumber [int] : The user's apartment number.
+			 * @param user_unitNumber [int] : The unit number of the user's address.
+			 */
+			void set_user_address(string user_street , string user_city , string user_province , string user_country , string user_PostalCode , int user_apartmentNumber , int user_unitNumber)
 			{
-				user_address.set_Address(user_street , user_city , user_province , user_country , user_PostalCode);
+				userAddress.set_Address(user_street , user_city , user_province , user_country , user_PostalCode , user_apartmentNumber , user_unitNumber);
 			}
+
+			/**
+			 * @brief: function sets the user's phone number if it consists only of digits or if the first character
+			 * is '+' and the rest are digits, otherwise it throws an exception.
+			 *
+			 * @param user_phone_number [string] : The parameter `user_phone_number` is a string that represents the phone
+			 * number of a user.
+			 */
 			void set_users_phone_number(string user_phone_number)
 			{
-				strcpy(phone_number , user_phone_number.c_str());
+				if (all_of(user_phone_number.begin(), user_phone_number.end(), ::isdigit)) {
+					userPhoneNumber = user_phone_number;
+				}
+				else if(all_of(user_phone_number.begin() + 1, user_phone_number.end(), ::isdigit)) { // the first char could be '+'
+					userPhoneNumber = user_phone_number;
+				}
+				else{
+					throw string("Invalid Phone Number");
+				}
 			}
+
+
+			/**
+			 * @brief : The function sets the email address for a user, but throws an exception if the email is invalid.
+			 * @throws [string] : "Invalid Email passed" exception;
+			 * @param email[string] : The email parameter is a string that represents the email address that needs to be set.
+			 */
 			void set_email(string email)
 			{
-				strcpy(e_mail , email.c_str());
-			}
-			/*
-			void set_user_checking_amount(double user_checking_amount)
-			{
-				checking_amount = user_checking_amount;
-			}
-			void set_user_saving_amount(double user_saving_amount)
-			{
-			saving_amount = user_saving_amount;
-			}
-			void set_user_interest_rate(double user_interest_rate = default_interest_rate)
-			{
-				interest_rate = user_interest_rate / 100;
-			}
-			void set_user_visa_amount(double user_visa_amount)
-			{
-				if(have_visa)
-				{
-					visa_amount = user_visa_amount;
+				if(checkIfValidEmail(email)){
+					userEmail = email;
 				}
-				else
-				{
-					printf("\aSorry. The user don't have any visa card right now.");
+				else{
+					throw string("Invalid Email passed");
 				}
 			}
-			*/
+
+			/**
+			 * @brief : function "set_user_sex" sets the sex of the user to a new value.
+			 *
+			 * @param newSex[char] : The newSex parameter is a character that represents the user's sex.
+			 */
+			void set_user_sex(char newSex)
+			{
+				userSex = newSex;
+			}
+
+
+			/**
+			 * The function sets the birth date of a user using the provided day, month, and year.
+			 *
+			 * @param day [int] : 1 ~ 31
+			 * @param month [int] : 1 ~ 12
+			 * @param year [int] : 1900 ~ current_year
+			 */
 			void set_user_birth_date(short int user_birth_day , short int user_birth_month , short int user_birth_year)
 			{
-				Birth_date.setDate(user_birth_day , user_birth_month , user_birth_year);
+				userBirthDate.setDate(user_birth_day , user_birth_month , user_birth_year);
 			}
-			/* Intially it was:
-			void set_every_thing_for_user(string user_name , string user_password , string user_address , string user_city , string user_province , string user_country , long long int account_creator_id , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email, double user_checking_amount = 0 , double user_saving_amount= 0 , double user_interest_rate = default_interest_rate)
+
+
+			/**
+			 * @brief Set the every thing for user object
+			 * The code is defining a function called "set_every_thing_for_user" that sets various attributes for a user object.
+			 * The function takes in multiple parameters including the user's name, password, address, birth date, sex, phone number, and email.
+			 * It then calls various setter functions to set these attributes for the user object.
+			 *
+			 * @param user_name [string] : Name of the person
+			 * @param user_password [string] : password for that person
+			 * @param user_street [string] : street from Address
+			 * @param user_city [string] : city from Address
+			 * @param user_province [string] : province from Address
+			 * @param user_country [string] : country from Address
+			 * @param user_PostalCode [string] : Postal Code from Address
+			 * @param user_ApartmentNumber [int] : Dfault 0, The user's apartment number, if applicable.
+			 * @param user_unitNumber [int] : Dfault 0 , The user_unitNumber
+			 * @param user_birth_date [int] : day from Date
+			 * @param user_birth_month [int] : month from Date
+			 * @param user_birth_year [int] : year from Date
+			 * @param user_sex [char] : Expected ('M' / 'F' / 'G' / 'T')
+			 * @param user_phone_number [string] : User phone number with country code
+			 * @param user_email [string] : User email address. Expected '@xx....com' at the end
+			 */
+			void set_every_thing_for_user(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode, int user_apartmentNumber , int user_UnitNumber , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
 			{
 				set_user_name(user_name);
-				set_user_address(user_address , user_city , user_province , user_country);
-				set_user_password(user_password);
-				set_user_checking_amount(user_checking_amount);
-				set_user_saving_amount(user_saving_amount);
-				visa_amount = 0;
-				set_user_interest_rate(user_interest_rate);
-				account_creators_id = account_creator_id;
-				set_user_birth_date(user_birth_date , user_birth_month , user_birth_year);
-				sex = user_sex;
 				set_users_phone_number(user_phone_number);
-				set_email(user_email);
-			}
-			void set_user_account_creation_date()
-			{
-				strcpy(account_create_date , date_time_function().c_str());
-			}
-			void set_account_modification_date()
-			{
-			    strcpy(last_account_modification_date , date_time_function().c_str());
-			}
-			void enable_account_status()
-			{
-				active_status = true;
-			}
-			void disable_account_status()
-			{
-				active_status = false;
-			}
-			*/
-			void set_every_thing_for_user(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode, short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
-			{
-				set_user_name(user_name);
-				set_user_address(user_street , user_city , user_province , user_country , user_PostalCode);
 				set_user_password(user_password);
-				// set_user_checking_amount(user_checking_amount);
-				// set_user_saving_amount(user_saving_amount);
-				// visa_amount = 0;
-				// set_user_interest_rate(user_interest_rate);
-				// account_creators_id = account_creator_id;
-				set_user_birth_date(user_birth_date , user_birth_month , user_birth_year);
-				sex = user_sex;
-				set_users_phone_number(user_phone_number);
 				set_email(user_email);
+				set_user_address(user_street , user_city , user_province , user_country , user_PostalCode , user_apartmentNumber , user_UnitNumber);
+				set_user_sex(user_sex);
+				set_user_birth_date(user_birth_date , user_birth_month , user_birth_year);
+				set_users_phone_number(user_phone_number);
 			}
+
 			//getters:
 			/*void print_everything()
 			{
 				cout<<"Name: "<<setw(20)<<name<<" ;ACC number: "<<account_number<<" ;interest_rate: "<<setw(3)<<interest_rate<<" ;last modified by: "<<last_modifier<<"; is manager :"<<is_employee<<'\n';
 			}
-			*/
 			void print_Debugging_info()
 			{
 				cout<<"Name: " << this->name << "DOB: "
@@ -169,140 +232,161 @@ class Person
                 << this->user_address.print_address() <<' '
 				<< this->sex <<' ' << this->e_mail <<' ' << this->phone_number <<' ' <<  this->password <<' ';
 			}
-			/*
-			long long int get_total_customers()
-			{
-				return total_customers;
-			}
-			long long int get_account_number()
-			{
-				return account_number;
-			}
-			long long int get_visa_number()
-			{
-				if(have_visa){
-					return visa_number;
-				}
-				else{
-					return -1;
-				}
-			}
-			long long int get_account_creators_id()
-			{
-				return account_creators_id;
 			}
 			*/
+
+			/**
+			 * @brief: function "get_name" returns the value of the variable "userName" as a string.
+			 *
+			 * @return [string] the value of the variable "userName", which is a string.
+			 */
 			string get_name()
 			{
-				return name;
-			}
-			string get_address()
-			{
-				user_address.display();
-			}
-			/*
-			string get_city()
-			{
-				return city;
-			}
-			string get_province()
-			{
-				return province;
-			}
-			string get_country()
-			{
-				return country;
+				return userName;
 			}
 
-			double get_checking_amount()
+
+			/**
+			 * @brief: function "get_phoneNumber" returns the user's phone number.
+			 *
+			 * @return [string] the value of the variable "userPhoneNumber", which is a string.
+			 */
+			string get_phoneNumber()
 			{
-				return checking_amount;
+				return userPhoneNumber;
 			}
-			double get_saving_amount()
-			{
-				return saving_amount;
-			}
-			bool get_active_status()
-			{
-				return active_status;
-			}
-			string get_last_modification_date()
-			{
-				return last_account_modification_date;
-			}
-			long long int get_last_modifiers_number()
-			{
-				return last_modifier;
-			}
-			*/
+
+
+			/**
+			 * @brief : function "get_email" returns the value of the variable "userEmail".
+			 *
+			 * @return [string] : The email address stored in the variable userEmail.
+			 */
 			string get_email()
 			{
-				return e_mail;
+				return userEmail;
 			}
+
+
+			/**
+			 * The function "get_address" displays the user's address.
+			 */
+			string get_address()
+			{
+				return userAddress.toString();
+			}
+
+
+			/**
+			 * @brief: function "get_city" returns the city of the user's address.
+			 *
+			 * @return [string] The city of the user's address.
+			 */
+			string get_city()
+			{
+				return userAddress.getCity();
+			}
+
+
+			/**
+			 * @brief: The function "get_province" returns the state of the user's address.
+			 *
+			 * @return [string] : The state of the user's address.
+			 */
+			string get_province()
+			{
+				return userAddress.getState();
+			}
+
+
+			/**
+			 * @brief: The function "get_country" returns the country of the user's address.
+			 *
+			 * @return [string] The country of the user's address.
+			 */
+			string get_country()
+			{
+				return userAddress.getCountry();
+			}
+
+			string get_DateOfBirth()
+			{
+				return userBirthDate.toString();
+			}
+
 		//others:
-			/*
-			void request_for_visa(long long int last_modifier_id)
+
+			/**
+			 * @brief: function "matchPassword" checks if the given password matches the user's password.
+			 *
+			 * @param passwordToBeChecked A string representing the password that needs to be checked against
+			 * the user's password.
+			 *
+			 * @return a boolean value;
+			 * [true] if password matches
+			 * [false] , otherwise
+			 */
+			bool matchPassword(const string passwordToBeChecked)
 			{
-				have_visa = true;
-				last_modifier = last_modifier_id;
+				return passwordToBeChecked == userPassword;
 			}
-			void create_new_account_number()
+
+
+			/**
+			 * @brief : The code defines a function called "print_formatted_info_for_person" that prints formatted 
+			 * information for a person. 
+			 * The function uses the "gxy" function to set the cursor position on the console and then uses the "cout" 
+			 * statement to print the information. 
+			 * The information includes the person's name, address, phone number, sex, birth date, and email.
+			 * 
+			 */
+			void print_formatted_info_for_person()
 			{
-				account_number = 100000000 + (rand() % 899999999) + 3;
+				gxy(2 , 1) , cout<<"Name:				"<< userName;
+				gxy(2 , 2) , cout<<"Address:				"<< get_address();
+				gxy(2 , 3) , cout<<"Phone Number:			"<< userPhoneNumber;
+				gxy(2 , 4) , cout<<"Sex:				"<< userSex;
+				gxy(2 , 5) , cout<<"Birh Date:				"<< get_DateOfBirth();
+				gxy(2 , 6) , cout<<"Email:				"<< userEmail;
 			}
-			void modify_account(long long int modifiers_id , string user_name , string user_address , string user_city , string user_province , string user_country , double user_interest_rate , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number ,  string user_email ,  bool user_is_employee_of_the_bank , long long int user_employee_number)
+
+			/**
+			 * @brief checks if the passed string contains a number or not
+			 * The code is defining a function called "stringHasAnyDigit" that takes a string as input and checks if the string contains any digits.
+			 * It uses the "any_of" function from the algorithm library to iterate over each character in the string
+			 * and checks if it is a digit using the "isdigit" function.
+			 * If any digit is found, the function returns true, otherwise it returns false.
+			 *
+			 * @param s [String] : the string to be checked.
+			 * @return true : if there is a number in the string.
+			 * @return false : if no number in the string.
+			 */
+			static bool stringHasAnyDigit(const string s)
 			{
-				set_every_thing_for_user(user_name , password , user_address , user_city , user_province , user_country , account_creators_id , user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number , user_email , checking_amount , saving_amount , interest_rate);
-                last_modified_by(modifiers_id);
+				return any_of(s.begin(), s.end(), ::isdigit);
 			}
-			void last_modified_by(long long int employee_id)
+
+			/**
+			 * The function checks if a given string is a valid email address ending with ".com".
+			 *
+			 * @param str [string] : The input string that needs to be checked if it is a valid email address.
+			 *
+			 * @return a boolean value. It returns true if the given string is a valid email address, and false otherwise.
+			 */
+			static bool checkIfValidEmail(const string& str)
 			{
-				last_modifier = employee_id;
-			}
-			*/
-			/*void print_every_details_for_customer()
-			{
-				gxy(5 , 1) , cout<<"account number:			"<<account_number;
-				gxy(5 , 2) , cout<<"Name:				"<<name;
-				gxy(5 , 3) , cout<<"Address:				"<<address<<", "<<city<<", "<<province<<", "<<country;
-				gxy(5 , 4) , cout<<"Phone Number:			"<<phone_number;
-				gxy(5 , 5) , cout<<"Sex:				"<<sex;
-				gxy(5 , 6) , cout<<"Birh Date:				"<<birth_date<<"\\"<<birth_month<<"\\"<<birth_year;
-				gxy(5 , 7) , cout<<"Checking Amount:			"<<checking_amount;
-				gxy(5 , 8) , cout<<"Saving Amount:			"<<saving_amount;
-				if(have_visa){
-					gxy(5 , 9) , cout<<"Visa Amount:	"<<visa_amount;
+				int at_occurance = -1 ;
+				for(int i=0 ; str[i] ; i++){
+					if(str[i] == '@'){
+						at_occurance = i;
+					}
+					else if(str[i] == '.' and str[i+1] and str[i+1] == 'c' and
+							str[i+2] and str[i+2] == 'o' and str[i+3] and
+							str[i+3] == 'm' and i > at_occurance + 4 and
+							str[i +4 ] == 0){
+						return true;
+					}
 				}
-				else{
-					gxy(5 , 9) , cout<<"No Visa for this account";
-				}
-				gxy(5 , 10) , cout<<"interest rate:			"<<interest_rate;
-				gxy(5 , 11) , cout<<"account created by:		"<<account_creators_id;
-				if(is_employee){
-					gxy(5 , 12) , cout<<"Employee number:	"<<employee_number;
-				}
-				else{
-					gxy(5 , 12) , cout<<"Not an bank employee";
-				}
-				gxy(5 , 13) , cout<<"Last modified by:			"<<last_modifier;
-				gxy(5 , 14) , cout<<"Made_transections:			"<<made_transection;
-				gxy(5 , 15) , cout<<"email						"<<e_mail;
-				gxy(5 , 16) , cout<<"Account created on:		"<<account_create_date;
-				gxy(5 , 17) , cout<<"Last modified on:			"<<last_account_modification_date;
+				return false;
 			}
-		*/
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////new
-		//getters
-		//friend functions:
-		//deposits
-			/*
-			void deposit_into_checking(double amount)
-			{
-				checking_amount += amount;
-			}
-			void deposit_into_saving(double amount)
-			{
-				saving_amount += amount;
-			}
-			*/
 };

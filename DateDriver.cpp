@@ -6,6 +6,6 @@ int main()
 {
     Date d1;
     d1.setDate(4 , 8 , 2001);
-    d1.display();
+    cout << d1;
     return 0;
 }
