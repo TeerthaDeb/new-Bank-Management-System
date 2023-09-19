@@ -1,3 +1,14 @@
+/**
+ * @file Address.h
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-09-19
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include<bits/stdc++.h>
 #include<iostream>
 #include<string>
@@ -43,6 +54,18 @@ public:
 	 */
 	Address(string Street , string City , string State , string Country , string PostalCode , int ApartmentNumber = 0 , int UnitNumber = 0) {
 		set_Address(Street , City , State , Country , PostalCode , ApartmentNumber , UnitNumber);
+	}
+
+	//Copy Constructor
+	
+	/**
+	 * @brief Construct a new Address object
+	 * 
+	 * @param a [Address]
+	 */
+	Address(const Address &a)
+	{
+		set_Address(a.Street , a.City , a.State , a.Country , a.PostalCode , a.ApartmentNumber , a.UnitNumber);
 	}
 
     // Setter methods

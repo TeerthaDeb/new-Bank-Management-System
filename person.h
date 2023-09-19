@@ -1,5 +1,17 @@
+/**
+ * @file Person.h
+ * @author Maharaj Teertha Deb (teertha.deb579@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-09-19
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <bits/stdc++.h>
 #include <string>
+#include <iostream>
 #include "Date.h"
 #include "Address.h"
 #include "gotoxy.h"
@@ -55,10 +67,19 @@ class Person
 			 * @param user_sex [char] : Expected ('M' / 'F' / 'G' / 'T')
 			 * @param user_phone_number [string] : User phone number with country code
 			 * @param user_email [string] : User email address. Expected '@xx....com' at the end
+			 * 
+			 * @throws [string] : "Invalid Email passed" exception;
+			 * @throws [String] The password is less than 8 words. Can not set password.
+			 * @throws [String] The password is less than 8 words. Can not set password.
+			 * @throws UserName can not have a digit in it
+			 * @throws [String] Invalid Phone Number
 			 */
-			Person(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode , int user_ApartmentNumber , int user_unitNumber , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
+			Person(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country ,
+					string user_PostalCode , int user_ApartmentNumber , int user_unitNumber , short int user_birth_date , short int user_birth_month , 
+					short int user_birth_year , char user_sex , string user_phone_number , string user_email)
 			{
-				set_every_thing_for_user(user_name , user_password , user_street , user_city , user_province , user_country , user_PostalCode , user_ApartmentNumber , user_unitNumber, user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number , user_email);
+				set_every_thing_for_user(user_name , user_password , user_street , user_city , user_province , user_country , user_PostalCode , 
+				user_ApartmentNumber , user_unitNumber, user_birth_date , user_birth_month , user_birth_year , user_sex , user_phone_number , user_email);
 			}
 
 
@@ -78,10 +99,10 @@ class Person
 		//setters:
 			/**
 			 * @brief Set the user password object
-			 * @throws [String] The password is less than 8 words. Can not set password.
-			 * The above code is defining a function called "set_user_password" that takes a string parameter called "new_password".
 			 *
 			 * @param new_password [String] : expected more than 8 words. otherwise exception thrown;
+			 * 
+			 * @throws [String] The password is less than 8 words. Can not set password.
 			 */
 			void set_user_password(string new_password)
 			{
@@ -94,10 +115,10 @@ class Person
 
 			/**
 			 * @brief Set the user name object
-			 * @throws UserName can not have a digit in it
-			 * The above code is defining a function called "set_user_name" that takes a string parameter called "user_name".
-			 * This function is used to set the name of a user.
+			 * 
 			 * @param user_name [String] : name of the user
+			 * 
+			 * @throws UserName can not have a digit in it
 			 */
 			void set_user_name(string user_name)
 			{
@@ -120,10 +141,21 @@ class Person
 			 * code of the user's address.
 			 * @param user_apartmentNumber [int] : The user's apartment number.
 			 * @param user_unitNumber [int] : The unit number of the user's address.
+			 * 
 			 */
 			void set_user_address(string user_street , string user_city , string user_province , string user_country , string user_PostalCode , int user_apartmentNumber , int user_unitNumber)
 			{
 				userAddress.set_Address(user_street , user_city , user_province , user_country , user_PostalCode , user_apartmentNumber , user_unitNumber);
+			}
+
+			/**
+			 * @brief Set the user address object
+			 * 
+			 * @param a [Address] : Address of the user 
+			 */
+			void set_user_address(Address a)
+			{
+				this->userAddress = Address(a);
 			}
 
 			/**
@@ -132,6 +164,8 @@ class Person
 			 *
 			 * @param user_phone_number [string] : The parameter `user_phone_number` is a string that represents the phone
 			 * number of a user.
+			 * 
+			 * @throws [String] Invalid Phone Number
 			 */
 			void set_users_phone_number(string user_phone_number)
 			{
@@ -149,8 +183,10 @@ class Person
 
 			/**
 			 * @brief : The function sets the email address for a user, but throws an exception if the email is invalid.
-			 * @throws [string] : "Invalid Email passed" exception;
+			 * 
 			 * @param email[string] : The email parameter is a string that represents the email address that needs to be set.
+			 * 
+			 * @throws [string] : "Invalid Email passed" exception;
 			 */
 			void set_email(string email)
 			{
@@ -185,7 +221,6 @@ class Person
 				userBirthDate.setDate(user_birth_day , user_birth_month , user_birth_year);
 			}
 
-
 			/**
 			 * @brief Set the every thing for user object
 			 * The code is defining a function called "set_every_thing_for_user" that sets various attributes for a user object.
@@ -207,6 +242,13 @@ class Person
 			 * @param user_sex [char] : Expected ('M' / 'F' / 'G' / 'T')
 			 * @param user_phone_number [string] : User phone number with country code
 			 * @param user_email [string] : User email address. Expected '@xx....com' at the end
+			 *
+			 *
+			 * @throws [string] : "Invalid Email passed" exception;
+			 * @throws [String] The password is less than 8 words. Can not set password.
+			 * @throws [String] The password is less than 8 words. Can not set password.
+			 * @throws UserName can not have a digit in it
+			 * @throws [String] Invalid Phone Number
 			 */
 			void set_every_thing_for_user(string user_name , string user_password , string user_street , string user_city , string user_province , string user_country , string user_PostalCode, int user_apartmentNumber , int user_UnitNumber , short int user_birth_date , short int user_birth_month , short int user_birth_year , char user_sex , string user_phone_number , string user_email)
 			{
@@ -221,19 +263,6 @@ class Person
 			}
 
 			//getters:
-			/*void print_everything()
-			{
-				cout<<"Name: "<<setw(20)<<name<<" ;ACC number: "<<account_number<<" ;interest_rate: "<<setw(3)<<interest_rate<<" ;last modified by: "<<last_modifier<<"; is manager :"<<is_employee<<'\n';
-			}
-			void print_Debugging_info()
-			{
-				cout<<"Name: " << this->name << "DOB: "
-                << this->Birth_date.print_date() << ' '
-                << this->user_address.print_address() <<' '
-				<< this->sex <<' ' << this->e_mail <<' ' << this->phone_number <<' ' <<  this->password <<' ';
-			}
-			}
-			*/
 
 			/**
 			 * @brief: function "get_name" returns the value of the variable "userName" as a string.
@@ -309,11 +338,20 @@ class Person
 				return userAddress.getCountry();
 			}
 
+			/**
+			 * @brief Get the DateOfBirth object
+			 *
+			 * @return [string] string format of date of birth
+			 */
 			string get_DateOfBirth()
 			{
 				return userBirthDate.toString();
 			}
 
+			char get_sex()
+			{
+				return userSex;
+			}
 		//others:
 
 			/**
@@ -333,21 +371,21 @@ class Person
 
 
 			/**
-			 * @brief : The code defines a function called "print_formatted_info_for_person" that prints formatted 
-			 * information for a person. 
-			 * The function uses the "gxy" function to set the cursor position on the console and then uses the "cout" 
-			 * statement to print the information. 
+			 * @brief : The code defines a function called "print_formatted_info_for_person" that prints formatted
+			 * information for a person.
+			 * The function uses the "gxy" function to set the cursor position on the console and then uses the "cout"
+			 * statement to print the information.
 			 * The information includes the person's name, address, phone number, sex, birth date, and email.
-			 * 
+			 *
 			 */
 			void print_formatted_info_for_person()
 			{
 				gxy(2 , 1) , cout<<"Name:				"<< userName;
-				gxy(2 , 2) , cout<<"Address:				"<< get_address();
+				gxy(2 , 2) , cout<<"Address:			"<< get_address();
 				gxy(2 , 3) , cout<<"Phone Number:			"<< userPhoneNumber;
 				gxy(2 , 4) , cout<<"Sex:				"<< userSex;
-				gxy(2 , 5) , cout<<"Birh Date:				"<< get_DateOfBirth();
-				gxy(2 , 6) , cout<<"Email:				"<< userEmail;
+				gxy(2 , 5) , cout<<"Birh Date:			"<< get_DateOfBirth();
+				gxy(2 , 6) , cout<<"Email:			"<< userEmail;
 			}
 
 			/**
@@ -389,4 +427,47 @@ class Person
 				}
 				return false;
 			}
+			friend ostream &operator<<(ostream & , const Person &);
+			//friend istream &operator>>(istream & , Person &);
 };
+
+/**
+ * @brief : The above code is overloading the << operator for the Person class.
+ * It allows an object of the Person class to be printed to an output stream (such as cout) using the << operator.
+ * The output stream is passed as the first parameter, and the Person object is passed as the second parameter.
+ * The function then prints the various member variables of the Person object to the output stream and returns the output stream.
+ *
+ * @param strm [ostream] :
+ * @param obj [Person]
+ * @return ostream& [ostream] : that will be written in the screen.
+ */
+ostream &operator<<(ostream &strm, const Person &obj)
+{
+	strm << obj.userName << obj.userAddress << obj.userPhoneNumber
+			<< obj.userSex << obj.userBirthDate << obj.userEmail << '\n';
+	return strm;
+}
+
+
+/**
+ * @brief The code snippet defines an overloaded `>>` operator for the `Person` class in C++, which
+ * allows extraction of values from an input stream and assigns them to the corresponding member
+ * variables of a `Person` object.
+ *
+ * @return The `ostream&` object `strm` is being returned.
+ */
+// ostream& operator>>(istream & strm, Person &obj)
+// {
+// 	string line;
+//     getline(strm, line);
+//     istringstream iss(line);
+//     //The code snippet is using the `getline` function to extract values from the `iss` input string stream and assign them to the corresponding member variables
+// 	// of the Person object `obj`.
+// 	getline(iss , obj.userName , ',');
+// 	getline(iss , obj.userAddress , ',');
+// 	getline(iss , obj.userPhoneNumber , ',');
+// 	getline(iss , obj.userSex , ',');
+// 	getline(iss , obj.userBirthDate , ',');
+// 	getline(iss , obj.userEmail );
+//     return strm;
+// }
